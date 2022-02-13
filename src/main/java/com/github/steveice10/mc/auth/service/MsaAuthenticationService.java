@@ -323,7 +323,7 @@ public class MsaAuthenticationService extends AuthenticationService {
     public void login() throws RequestException {
         try {
             boolean password = this.password != null && !this.password.isEmpty();
-            boolean refresh = this.refreshToken != null && !this.refreshToken.isEmpty();
+            boolean refresh = false; // this.refreshToken != null && !this.refreshToken.isEmpty();
 
             // Complain if the username is not set
             if (this.username == null || this.username.isEmpty())
