@@ -19,7 +19,6 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +149,7 @@ public class GameProfile {
             this.properties = new ArrayList<>();
         }
 
-        return Collections.unmodifiableList(this.properties);
+        return this.properties;
     }
 
     /**
@@ -240,16 +239,16 @@ public class GameProfile {
 
                     this.textures = result.textures;
                 } else {
-                    this.textures = Collections.emptyMap();
+                    this.textures = new HashMap<>();
                 }
 
                 this.texturesVerified = requireSecure;
             } else {
-                return Collections.emptyMap();
+                return new HashMap<>();
             }
         }
 
-        return Collections.unmodifiableMap(this.textures);
+        return this.textures;
     }
 
     /**
