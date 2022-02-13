@@ -402,11 +402,13 @@ public class MsaAuthenticationService extends AuthenticationService {
         private String client_id;
         private String refresh_token;
         private String grant_type;
+        private String scope;
 
         protected MsRefreshRequest(String clientId, String refreshToken) {
             this.client_id = clientId;
             this.refresh_token = refreshToken;
             this.grant_type = "refresh_token";
+            this.scope = "service::user.auth.xboxlive.com::MBI_SSL";
         }
 
         public Map<String, String> toMap() {
@@ -415,6 +417,7 @@ public class MsaAuthenticationService extends AuthenticationService {
             map.put("client_id", client_id);
             map.put("refresh_token", refresh_token);
             map.put("grant_type", grant_type);
+            map.put("scope", scope);
 
             return map;
         }
