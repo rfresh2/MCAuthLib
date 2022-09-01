@@ -4,6 +4,7 @@ import com.github.steveice10.mc.auth.data.GameProfile;
 import com.github.steveice10.mc.auth.exception.request.InvalidCredentialsException;
 import com.github.steveice10.mc.auth.exception.request.RequestException;
 import com.github.steveice10.mc.auth.util.HTTP;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -136,7 +137,7 @@ public abstract class AuthenticationService extends Service {
      *
      * @throws RequestException If an error occurs while making the request.
      */
-    public abstract void login() throws RequestException;
+    public abstract void login() throws RequestException, MicrosoftAuthenticationException;
 
     /**
      * Logs the service out.
