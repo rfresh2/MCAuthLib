@@ -65,7 +65,7 @@ public class HTTP {
         JsonElement response;
         try {
             response = input == null ? performGetRequest(proxy, uri, extraHeaders) : performPostRequest(proxy, uri, extraHeaders, GSON.toJson(input), "application/json");
-        } catch(IOException e) {
+        } catch(Exception e) {
             throw new ServiceUnavailableException("Could not make request to '" + uri + "'.", e);
         }
 
