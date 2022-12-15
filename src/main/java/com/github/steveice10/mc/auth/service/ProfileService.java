@@ -6,11 +6,7 @@ import com.github.steveice10.mc.auth.exception.request.RequestException;
 import com.github.steveice10.mc.auth.util.HTTP;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Repository for looking up profiles by name.
@@ -18,6 +14,7 @@ import java.util.UUID;
 public class ProfileService extends Service {
     private static final URI DEFAULT_BASE_URI = URI.create("https://api.mojang.com/profiles/");
     private static final String SEARCH_ENDPOINT = "minecraft";
+    private static final URI UUID_PROFILE_BASE_URI = URI.create("https://sessionserver.mojang.com/session/minecraft/profile/");
 
     private static final int MAX_FAIL_COUNT = 3;
     private static final int DELAY_BETWEEN_PAGES = 100;
@@ -39,6 +36,29 @@ public class ProfileService extends Service {
      */
     public void findProfilesByName(String[] names, ProfileLookupCallback callback) {
         this.findProfilesByName(names, callback, false);
+    }
+
+    public GameProfile findProfileByUUID(final UUID uuid) {
+        int failCount = 0;
+        while (failCount < MAX_FAIL_COUNT) {
+            try {
+                GameProfile gameProfile = HTTP.makeRequest(getProxy(), UUID_PROFILE_BASE_URI.resolve(uuidToString(uuid)), null, GameProfile.class);
+                return gameProfile;
+            } catch (RequestException e) {
+                failCount++;
+                try {
+                    Thread.sleep(5000L);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    private String uuidToString(final UUID uuid) {
+        return uuid.toString().replace("-", "");
     }
 
     /**
