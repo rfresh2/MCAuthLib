@@ -3,20 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.steveice10</groupId>
-    <artifactId>mcauthlib</artifactId>
-    <version>2.0-5cmc</version>
+    <groupId>com.github.rfresh2</groupId>
+    <artifactId>MCAuthLib</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>MCAuthLib</name>
     <description>A library for authentication with Minecraft accounts.</description>
-    <url>http://github.com/Steveice10/MCAuthLib/</url>
-
-    <scm>
-        <connection>scm:git:git@github.com:Steveice10/MCAuthLib.git</connection>
-        <developerConnection>scm:git:git@github.com:Steveice10/MCAuthLib.git</developerConnection>
-        <url>git@github.com:Steveice10/MCAuthLib/</url>
-    </scm>
+    <url>http://github.com/rfresh2/MCAuthLib/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,19 +33,6 @@
         </license>
     </licenses>
 
-    <developers>
-        <developer>
-            <id>steveice10</id>
-            <name>Steveice10</name>
-            <email>Steveice10@gmail.com</email>
-        </developer>
-    </developers>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/Steveice10/MCAuthLib/issues</url>
-    </issueManagement>
-
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -62,7 +43,7 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>msal4j</artifactId>
-            <version>1.13.5</version>
+            <version>1.13.8</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

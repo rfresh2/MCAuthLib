@@ -10,4 +10,7 @@ testing
 
 *.iml
 .idea
+.gradle/
+build/
+build/
 
