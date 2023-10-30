@@ -11,9 +11,7 @@ import com.microsoft.aad.msal4j.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.util.Collections;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -29,6 +27,7 @@ public class MsaDeviceAuthenticationService extends AuthenticationService {
     private final Set<String> scopes;
     private final PublicClientApplication app;
     private Consumer<DeviceCode> deviceCodeConsumer;
+    private Date expiryDate;
 
     /**
      * Create a new {@link AuthenticationService} for Microsoft accounts using default options.
@@ -151,7 +150,7 @@ public class MsaDeviceAuthenticationService extends AuthenticationService {
                                         McProfileResponse.class,
                                         Collections.singletonMap("Authorization", "Bearer ".concat(this.accessToken)));
 
-        assert response != null;
+        if (response == null) throw new RequestException("Invalid response received.");
         this.selectedProfile = new GameProfile(response.id, response.name);
         this.profiles = Collections.singletonList(this.selectedProfile);
     }
@@ -168,8 +167,9 @@ public class MsaDeviceAuthenticationService extends AuthenticationService {
                 throw new IllegalStateException("Device code consumer is not set.");
 
             // Try to log in to the users account
-            var response = getLoginResponseFromToken("d=".concat(getMsalAccessToken().get().accessToken()));
-
+            IAuthenticationResult msalAuthResult = getMsalAccessToken().get();
+            this.expiryDate = msalAuthResult.expiresOnDate();
+            var response = getLoginResponseFromToken("d=".concat(msalAuthResult.accessToken()));
             if (response == null) throw new RequestException("Invalid response received.");
             this.accessToken = response.access_token;
 
@@ -180,6 +180,28 @@ public class MsaDeviceAuthenticationService extends AuthenticationService {
         } catch (MalformedURLException | ExecutionException | InterruptedException ex) {
             throw new RequestException(ex);
         }
+    }
+
+    public void refreshMsalToken() throws RequestException {
+        try {
+            if (!this.loggedIn) throw new RequestException("Not logged in");
+            IAccount account = this.getIAccount();
+            if (account == null) return;
+            IAuthenticationResult msalAuthResult = this.app.acquireTokenSilently(SilentParameters.builder(this.scopes,
+                                                                                                                 account)
+                                                                                            .build()).get();
+            this.expiryDate = msalAuthResult.expiresOnDate();
+            var response = getLoginResponseFromToken(msalAuthResult.accessToken());
+            if (response == null) throw new RequestException("Invalid response received.");
+            this.accessToken = response.access_token;
+            getProfile();
+        } catch (MalformedURLException | InterruptedException | ExecutionException ex) {
+            throw new RequestException(ex);
+        }
+    }
+
+    public Optional<Date> getExpiryDate() {
+        return Optional.ofNullable(this.expiryDate);
     }
 
     @Override
