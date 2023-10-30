@@ -191,7 +191,7 @@ public class MsaDeviceAuthenticationService extends AuthenticationService {
                                                                                                                  account)
                                                                                             .build()).get();
             this.expiryDate = msalAuthResult.expiresOnDate();
-            var response = getLoginResponseFromToken(msalAuthResult.accessToken());
+            var response = getLoginResponseFromToken("d=".concat(msalAuthResult.accessToken()));
             if (response == null) throw new RequestException("Invalid response received.");
             this.accessToken = response.access_token;
             getProfile();
