@@ -12,8 +12,7 @@ import java.util.*;
  * Repository for looking up profiles by name.
  */
 public class ProfileService extends Service {
-    private static final URI DEFAULT_BASE_URI = URI.create("https://api.mojang.com/profiles/");
-    private static final String SEARCH_ENDPOINT = "minecraft";
+    private static final URI BULK_PROFILE_LOOKUP_BY_NAME_URI = URI.create("https://api.minecraftservices.com/minecraft/profile/lookup/bulk/byname");
     private static final URI UUID_PROFILE_BASE_URI = URI.create("https://sessionserver.mojang.com/session/minecraft/profile/");
 
     private static final int MAX_FAIL_COUNT = 3;
@@ -25,7 +24,7 @@ public class ProfileService extends Service {
      * Creates a new ProfileService instance.
      */
     public ProfileService() {
-        super(DEFAULT_BASE_URI);
+        super(BULK_PROFILE_LOOKUP_BY_NAME_URI);
     }
 
     /**
@@ -86,7 +85,7 @@ public class ProfileService extends Service {
                     while(failCount < MAX_FAIL_COUNT && tryAgain) {
                         tryAgain = false;
                         try {
-                            GameProfile[] profiles = HTTP.makeRequest(getProxy(), getEndpointUri(SEARCH_ENDPOINT), request, GameProfile[].class);
+                            GameProfile[] profiles = HTTP.makeRequest(getProxy(), BULK_PROFILE_LOOKUP_BY_NAME_URI, request, GameProfile[].class);
                             failCount = 0;
                             Set<String> missing = new HashSet<String>(request);
                             for(GameProfile profile : profiles) {
