@@ -18,7 +18,7 @@ public class ProfileService extends Service {
     private static final int MAX_FAIL_COUNT = 3;
     private static final int DELAY_BETWEEN_PAGES = 100;
     private static final int DELAY_BETWEEN_FAILURES = 750;
-    private static final int PROFILES_PER_REQUEST = 100;
+    private static final int PROFILES_PER_REQUEST = 10;
 
     /**
      * Creates a new ProfileService instance.
