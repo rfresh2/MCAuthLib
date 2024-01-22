@@ -18,12 +18,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Information about a user profile.
@@ -295,7 +290,7 @@ public class GameProfile {
 
     @Override
     public String toString() {
-        return "GameProfile{id=" + this.id + ", name=" + this.name + ", properties=" + this.getProperties() + "}";
+        return "GameProfile{id=" + this.id + ", name=" + this.name + "}";
     }
 
     /**
