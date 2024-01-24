@@ -149,16 +149,17 @@ public class HTTP {
                 String errorMessage = object.has("errorMessage") ? object.get("errorMessage").getAsString() : "";
                 errorMessage = object.has("error_description") ? object.get("error_description").getAsString() : errorMessage;
                 if(!error.equals("")) {
+                    final String msg = "error: " + error + ", cause: " + cause + ", errorMessage: " + errorMessage;
                     if(error.equals("ForbiddenOperationException")) {
                         if (cause != null && cause.equals("UserMigratedException")) {
-                            throw new UserMigratedException(errorMessage);
+                            throw new UserMigratedException(msg);
                         } else {
-                            throw new InvalidCredentialsException(errorMessage);
+                            throw new InvalidCredentialsException(msg);
                         }
                     } else if (error.equals("authorization_pending")) {
-                        throw new AuthPendingException(errorMessage);
+                        throw new AuthPendingException(msg);
                     } else {
-                        throw new RequestException(errorMessage);
+                        throw new RequestException(msg);
                     }
                 }
             }
