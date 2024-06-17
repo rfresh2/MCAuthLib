@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>msal4j</artifactId>
-            <version>1.15.0</version>
+            <version>1.15.1</version>
         </dependency>
         <dependency>
             <groupId>fr.litarvan</groupId>
@@ -86,7 +86,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.3.0</version>
                 <configuration>
                     <!-- No tests in this project atm -->
                     <skip>true</skip>
