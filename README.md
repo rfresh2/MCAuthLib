@@ -1,3 +1,7 @@
+# Archived
+
+This repo has been moved into [MCProtocolLib](https://github.com/rfresh2/MCProtocolLib) and will no longer receive updates here
+
 # MCAuthLib
 MCAuthLib is a library for authentication with Minecraft accounts. It is used in projects such as MCProtocolLib to handle authenticating users.
 
